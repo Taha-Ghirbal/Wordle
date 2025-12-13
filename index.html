@@ -18,7 +18,7 @@
         </div>
     </nav>
 <!----------- Heading ----------->
-    <h1>Wordle</h1>
+    <h1 id="game-title">Wordle</h1>
 
 <!----------- Game Board ----------->
     <div id="game-board">
@@ -71,42 +71,45 @@
             <div class="tile" id=""></div>
         </div>
     </div>
-    <!------ Reset ------>
-    <h3 id="reset-button">Reset</h1>
+    
     <!---------- Keyboard ---------->
-    <div class="Keyboard" id="Keyboard-first-row">
-        <p>q</p>
-        <p>w</p>
-        <p>e</p>
-        <p>r</p>
-        <p>t</p>
-        <p>y</p>
-        <p>u</p>
-        <p>i</p>
-        <p>o</p>
-        <p>p</p>
-        <p>delete</p>
-    </div>
+    <div class="keyboard">
+        <div class="row">
+            <button class="key">Q</button>
+            <button class="key">W</button>
+            <button class="key">E</button>
+            <button class="key">R</button>
+            <button class="key">T</button>
+            <button class="key">Y</button>
+            <button class="key">U</button>
+            <button class="key">I</button>
+            <button class="key">O</button>
+            <button class="key">P</button>
+        </div>
 
-    <div class="Keyboard" id="Keyboard-second-row">
-        <p>a</p>
-        <p>s</p>
-        <p>f</p>
-        <p>g</p>
-        <p>h</p>
-        <p>j</p>
-        <p>k</p>
-        <p>l</p>
-    </div>
+        <div class="row-offset">
+            <button class="key">A</button>
+            <button class="key">S</button>
+            <button class="key">D</button>
+            <button class="key">F</button>
+            <button class="key">G</button>
+            <button class="key">H</button>
+            <button class="key">J</button>
+            <button class="key">K</button>
+            <button class="key">L</button>
+        </div>
 
-    <div class="Keyboard" id="Keyboard-third-row">
-        <p>z</p>
-        <p>x</p>
-        <p>c</p>
-        <p>v</p>
-        <p>b</p>
-        <p>n</p>
-        <p>m</p>
+        <div class="row">
+            <button class="key wide">ENTER</button>
+            <button class="key">Z</button>
+            <button class="key">X</button>
+            <button class="key">C</button>
+            <button class="key">V</button>
+            <button class="key">B</button>
+            <button class="key">N</button>
+            <button class="key">M</button>
+            <button class="key wide">⌫</button>
+        </div>
     </div>
 </body>
 </html>

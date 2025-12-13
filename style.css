@@ -1,19 +1,61 @@
 /*----------------------------------- Page ----------------------------------*/
 
-
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 /*--------------------------------- Elements --------------------------------*/
 
-
+nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 30px;
+}
 
 /*----------------------------------- IDs -----------------------------------*/
 
-
+#game-title {
+    text-align: center;
+}
 
 /*--------------------------------- Classes ---------------------------------*/
 
+.keyboard {
+    display: grid;
+    gap: 8px;
+    max-width: 500px;
+    margin: auto;
+}
 
+.key {
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+}
+.key:active {
+    background-color: #d0d0d0;
+}
 
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.row-offset {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-left: 25px;
+}
 /*------------------------------- Transitions -------------------------------*/
 
 
