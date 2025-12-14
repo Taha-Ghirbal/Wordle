@@ -23,34 +23,35 @@ nav {
 
 #game-board {
     margin-top: 30px;
-    gap: 15px;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     align-items: center;
-    height: 100px;
 }
 
-/*--------------------------------- Classes ---------------------------------*/
-
-.tile{
-    display: inline-flex;
-    flex-direction: row;
-    width: 60px;
-    height: 60px;
-    border: 2px solid #000;
-    color: white;
-    border-radius: 2px;
-    font-size: 24px;
-    margin: 2px;
-}
-
-.keyboard {
+#keyboard {
     display: grid;
     gap: 8px;
     max-width: 500px;
     margin: auto;
 }
 
-.key {
+/*--------------------------------- Classes ---------------------------------*/
+
+.tile {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: white;
+    border-radius: 2px;
+}
+
+.letter {
     padding: 15px;
     background-color: #f0f0f0;
     border: none;
@@ -60,13 +61,12 @@ nav {
     user-select: none;
     text-align: center;
 }
-.key:active {
+.letter:active {
     background-color: #d0d0d0;
 }
 
 .row {
     display: flex;
-    justify-content: center;
     gap: 8px;
 }
 

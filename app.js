@@ -67,8 +67,10 @@ const fiveLetterWords = [
 
 /*-------------------------------- Constants --------------------------------*/
 
-const letters = document.querySelectorAll(".key");
+const letters = document.querySelectorAll("#keyboard .letter");
 const tiles = document.querySelectorAll(".tile");
+const keyboard = document.getElementById("keyboard")
+const rows = document.querySelectorAll("#game-board");
 
 /*-------------------------------- Variables --------------------------------*/
 
@@ -87,8 +89,37 @@ console.log("Wordle Solution (for testing purposes):", wordle);
 
 /*----------------------------- Event Listeners -----------------------------*/
 
+keyboard.addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
 
+  const key = btn.textContent.trim();
+
+  if (key === "ENTER") submitRow();
+  else if (key === "⌫") removeLetter();
+  else addLetter(key);
+});
 
 /*-------------------------------- Functions --------------------------------*/
 
+function addLetter(letter) {
+  if (currentCol >= 5) return;
 
+  const cell = rows[currentRow].children[currentCol];
+  cell.textContent = letter;
+  currentCol++;
+}
+
+function removeLetter() {
+  if (currentCol === 0) return;
+
+  currentCol--;
+  rows[currentRow].children[currentCol].textContent = "";
+}
+
+function submitRow() {
+  if (currentCol < 5) return;
+
+  currentRow++;
+  currentCol = 0;
+}
