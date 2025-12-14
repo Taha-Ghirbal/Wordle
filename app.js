@@ -67,11 +67,19 @@ const fiveLetterWords = [
 
 /*-------------------------------- Constants --------------------------------*/
 
-
+const letters = document.querySelectorAll(".key");
+const tiles = document.querySelectorAll(".tile");
 
 /*-------------------------------- Variables --------------------------------*/
 
+let wordle = fiveLetterWords[Math.floor(Math.random() * fiveLetterWords.length)];
+let currentRow = 0;
+let currentCol = 0;
+let gameOver = false;
 
+/*------------------------------ Initial Setup ------------------------------*/
+
+console.log("Wordle Solution (for testing purposes):", wordle);
 
 /*------------------------ Cached Element References ------------------------*/
 
