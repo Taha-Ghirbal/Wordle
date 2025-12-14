@@ -127,8 +127,8 @@ function submitRow() {
   evaluateRow(guess, tilesInRow);
 
   if (guess === wordle) {
-    console.log("You win!");
     gameOver = true;
+    showWinPopup();
     return;
   }
 
@@ -166,4 +166,25 @@ function evaluateRow(guess, tilesInRow) {
     tile.classList.remove("correct", "present", "absent");
     tile.classList.add(result[i]);
   }
+}
+
+function showWinPopup() {
+  const overlay = document.getElementById("win-overlay");
+  if (!overlay) return;
+  overlay.style.display = "flex";
+
+  const closeBtn = document.getElementById("win-close");
+  const close = () => {
+    overlay.style.display = "none";
+    document.removeEventListener("keydown", escHandler);
+  };
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", close, { once: true });
+  }
+
+  const escHandler = (e) => {
+    if (e.key === "Escape") close();
+  };
+  document.addEventListener("keydown", escHandler);
 }
