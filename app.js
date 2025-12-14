@@ -93,6 +93,8 @@ keyboard.addEventListener("click", (e) => {
   const btn = e.target.closest("button");
   if (!btn) return;
 
+  if (gameOver) return;
+
   const key = btn.textContent.trim();
 
   if (key === "ENTER") submitRow();
@@ -119,7 +121,49 @@ function removeLetter() {
 
 function submitRow() {
   if (currentCol < 5) return;
+  const tilesInRow = Array.from(rows[currentRow].children).slice(0, 5);
+  const guess = tilesInRow.map((t) => t.textContent.trim().toLowerCase()).join("");
+
+  evaluateRow(guess, tilesInRow);
+
+  if (guess === wordle) {
+    console.log("You win!");
+    gameOver = true;
+    return;
+  }
 
   currentRow++;
   currentCol = 0;
+
+  if (currentRow >= rows.length) {
+    gameOver = true;
+    console.log("Game over. The word was:", wordle);
+  }
+}
+
+function evaluateRow(guess, tilesInRow) {
+  const solutionArr = wordle.split("");
+  const result = Array(5).fill("absent");
+
+  for (let i = 0; i < 5; i++) {
+    if (guess[i] === solutionArr[i]) {
+      result[i] = "correct";
+      solutionArr[i] = null;
+    }
+  }
+
+  for (let i = 0; i < 5; i++) {
+    if (result[i] === "correct") continue;
+    const idx = solutionArr.indexOf(guess[i]);
+    if (idx !== -1) {
+      result[i] = "present";
+      solutionArr[idx] = null;
+    }
+  }
+
+  for (let i = 0; i < 5; i++) {
+    const tile = tilesInRow[i];
+    tile.classList.remove("correct", "present", "absent");
+    tile.classList.add(result[i]);
+  }
 }
