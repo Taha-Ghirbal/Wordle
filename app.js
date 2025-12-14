@@ -70,7 +70,7 @@ const fiveLetterWords = [
 const letters = document.querySelectorAll("#keyboard .letter");
 const tiles = document.querySelectorAll(".tile");
 const keyboard = document.getElementById("keyboard")
-const rows = document.querySelectorAll("#game-board");
+const rows = document.querySelectorAll("#game-board .board-row");
 
 /*-------------------------------- Variables --------------------------------*/
 
