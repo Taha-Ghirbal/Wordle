@@ -134,11 +134,30 @@ function evaluateRow(guess, tilesInRow) {
     }
   }
 
+  // animate reveal: add a 'reveal' class with staggered delays and apply
+  // the final result class when each tile's animation ends.
   for (let i = 0; i < 5; i++) {
     const tile = tilesInRow[i];
     tile.classList.remove("correct", "present", "absent");
-    tile.classList.add(result[i]);
+
+    // ensure no leftover inline delay
+    tile.style.animationDelay = `${i * 100}ms`;
+    tile.classList.add("reveal");
+
+    // add one-time animationend handler to apply the result class
+    ((t, idx) => {
+      const handler = (e) => {
+        // only act on our flip animation
+        if (e.animationName !== 'tile-flip') return;
+        t.classList.remove('reveal');
+        t.classList.add(result[idx]);
+        t.style.animationDelay = '';
+        t.removeEventListener('animationend', handler);
+      };
+      t.addEventListener('animationend', handler);
+    })(tile, i);
   }
+
   return result;
 }
 

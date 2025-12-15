@@ -56,6 +56,9 @@ nav {
     color: #000000;
     border-radius: 2px;
     margin: 2px 0px;
+    /* enable 3D flip effect */
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
 }
 
 .tile.correct {
@@ -171,6 +174,23 @@ nav {
 }
 
 /*-------------------------------- Animation --------------------------------*/
+
+/* Reveal (flip) animation */
+.board-row {
+        perspective: 800px;
+}
+.tile.reveal {
+        animation-name: tile-flip;
+        animation-duration: 420ms;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-in-out;
+}
+
+@keyframes tile-flip {
+    0% { transform: rotateX(0deg); }
+    50% { transform: rotateX(90deg); }
+    100% { transform: rotateX(0deg); }
+}
 
 
 
