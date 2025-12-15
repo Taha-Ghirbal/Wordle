@@ -159,7 +159,8 @@ function submitRow() {
 
   if (currentRow >= rows.length) {
     gameOver = true;
-    console.log("Game over. The word was:", wordle);
+    showLosePopup();
+    return;
   }
 }
 
@@ -196,6 +197,31 @@ function showWinPopup() {
   overlay.style.display = "flex";
 
   const closeBtn = document.getElementById("win-close");
+  const close = () => {
+    overlay.style.display = "none";
+    document.removeEventListener("keydown", escHandler);
+  };
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", close, { once: true });
+  }
+
+  const escHandler = (e) => {
+    if (e.key === "Escape") close();
+  };
+  document.addEventListener("keydown", escHandler);
+}
+
+function showLosePopup() {
+  const overlay = document.getElementById("lose-overlay");
+  if (!overlay) return;
+
+  const sol = document.getElementById("solution-word");
+  if (sol) sol.textContent = wordle.toUpperCase();
+
+  overlay.style.display = "flex";
+
+  const closeBtn = document.getElementById("lose-close");
   const close = () => {
     overlay.style.display = "none";
     document.removeEventListener("keydown", escHandler);

@@ -131,6 +131,19 @@ nav {
     cursor: pointer;
 }
 
+#lose-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+#lose-overlay .win-modal button {
+    background: #d9534f;
+}
+
 /*-------------------------------- Animation --------------------------------*/
 
 
