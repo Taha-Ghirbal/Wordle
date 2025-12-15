@@ -12,12 +12,18 @@
 nav {
     display: flex;
     justify-content: space-between;
-    margin: 20px 30px;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    border-bottom: #000000 2px solid;
+    padding-bottom: 15px;
 }
 
 /*----------------------------------- IDs -----------------------------------*/
 
 #game-title {
+    margin-top: 20px;
     text-align: center;
 }
 
