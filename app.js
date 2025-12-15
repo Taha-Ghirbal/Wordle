@@ -102,6 +102,28 @@ keyboard.addEventListener("click", (e) => {
   else addLetter(key);
 });
 
+document.addEventListener("keydown", (e) => {
+  if (gameOver) return;
+
+  const key = e.key;
+
+  if (key === "Enter") {
+    e.preventDefault();
+    submitRow();
+    return;
+  }
+
+  if (key === "Backspace") {
+    e.preventDefault();
+    removeLetter();
+    return;
+  }
+
+  if (/^[a-zA-Z]$/.test(key)) {
+    addLetter(key.toUpperCase());
+  }
+});
+
 /*-------------------------------- Functions --------------------------------*/
 
 function addLetter(letter) {

@@ -17,23 +17,6 @@ nav {
 
 /*----------------------------------- IDs -----------------------------------*/
 
-/* Tile states */
-.tile.correct {
-    background-color: #6aaa64;
-    color: #ffffff;
-    border-color: #6aaa64;
-}
-.tile.present {
-    background-color: #c9b458;
-    color: #ffffff;
-    border-color: #c9b458;
-}
-.tile.absent {
-    background-color: #787c7e;
-    color: #ffffff;
-    border-color: #787c7e;
-}
-
 #game-title {
     text-align: center;
 }
@@ -75,6 +58,22 @@ nav {
     margin: 2px 0px;
 }
 
+.tile.correct {
+    background-color: #6aaa64;
+    color: #ffffff;
+    border-color: #6aaa64;
+}
+.tile.present {
+    background-color: #c9b458;
+    color: #ffffff;
+    border-color: #c9b458;
+}
+.tile.absent {
+    background-color: #787c7e;
+    color: #ffffff;
+    border-color: #787c7e;
+}
+
 .letter {
     padding: 15px;
     background-color: #f0f0f0;
@@ -101,14 +100,6 @@ nav {
     margin-left: 25px;
 }
 /*------------------------------- Transitions -------------------------------*/
-
-
-
-/*-------------------------------- Animation --------------------------------*/
-
-
-
-/*------------------------------ Media Queries ------------------------------*/
 
 #win-overlay {
     position: fixed;
@@ -139,4 +130,10 @@ nav {
     border-radius: 6px;
     cursor: pointer;
 }
+
+/*-------------------------------- Animation --------------------------------*/
+
+
+
+/*------------------------------ Media Queries ------------------------------*/
 
