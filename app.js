@@ -146,6 +146,11 @@ function submitRow() {
   const tilesInRow = Array.from(rows[currentRow].children).slice(0, 5);
   const guess = tilesInRow.map((t) => t.textContent.trim().toLowerCase()).join("");
 
+  if (!fiveLetterWords.includes(guess)) {
+    showInvalidGuess(tilesInRow);
+    return;
+  }
+
   evaluateRow(guess, tilesInRow);
 
   if (guess === wordle) {
@@ -210,6 +215,14 @@ function showWinPopup() {
     if (e.key === "Escape") close();
   };
   document.addEventListener("keydown", escHandler);
+}
+
+function showInvalidGuess(tilesInRow) {
+  if (!tilesInRow || !tilesInRow.length) return;
+  tilesInRow.forEach((t) => t.classList.add("invalid"));
+  setTimeout(() => {
+    tilesInRow.forEach((t) => t.classList.remove("invalid"));
+  }, 600);
 }
 
 function showLosePopup() {
