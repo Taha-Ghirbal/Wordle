@@ -8,17 +8,71 @@
 }
 
 /*--------------------------------- Elements --------------------------------*/
-
 nav {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    /* make nav stretch full viewport width */
     width: 100%;
     margin: 0;
-    padding: 20px;
+    padding: 15px 30px;
     box-sizing: border-box;
+    position: relative;
     border-bottom: #000000 2px solid;
-    padding-bottom: 15px;
 }
+
+#name {
+    /* keep #name in normal flow; nav uses align-items:center for vertical centering */
+    margin: 0;
+}
+#name p { margin: 0; }
+
+body.dark {
+    background-color: #2b2b2b;
+    color: #eaeaea;
+}
+
+body.dark nav {
+    border-bottom-color: #e6e6e6;
+}
+
+body.dark #game-title {
+    color: #eaeaea;
+}
+
+body.dark .tile {
+    background-color: #3a3a3a;
+    color: #eaeaea;
+    border-color: #e6e6e6;
+}
+
+body.dark .letter {
+    background-color: #444444;
+    color: #eaeaea;
+}
+
+body.dark #keyboard .letter.correct {
+    background-color: #6aaa64;
+    color: #ffffff;
+}
+body.dark #keyboard .letter.present {
+    background-color: #c9b458;
+    color: #ffffff;
+}
+body.dark #keyboard .letter.absent {
+    background-color: #5f6163;
+    color: #ffffff;
+}
+
+#dark-toggle {
+    margin: 0;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+}
+
 
 /*----------------------------------- IDs -----------------------------------*/
 
@@ -62,7 +116,6 @@ nav {
     color: #000000;
     border-radius: 2px;
     margin: 2px 0px;
-    /* enable 3D flip effect */
     transform-style: preserve-3d;
     backface-visibility: hidden;
 }
@@ -181,7 +234,6 @@ nav {
 
 /*-------------------------------- Animation --------------------------------*/
 
-/* Reveal (flip) animation */
 .board-row {
         perspective: 800px;
 }

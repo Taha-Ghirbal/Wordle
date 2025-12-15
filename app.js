@@ -8,12 +8,28 @@ const letters = document.querySelectorAll("#keyboard .letter");
 const tiles = document.querySelectorAll(".tile");
 const keyboard = document.getElementById("keyboard")
 const rows = document.querySelectorAll("#game-board .board-row");
-// quick map from letter (A-Z) to keyboard button element for fast updates
 const keyMap = {};
 letters.forEach((btn) => {
   const k = btn.textContent.trim().toUpperCase();
   if (/^[A-Z]$/.test(k)) keyMap[k] = btn;
 });
+
+const darkToggle = document.getElementById('dark-toggle');
+if (darkToggle) {
+  const toggleDark = () => {
+    const isDark = document.body.classList.toggle('dark');
+    darkToggle.setAttribute('aria-pressed', String(isDark));
+    darkToggle.textContent = isDark ? 'Light mode' : 'Dark mode';
+  };
+
+  darkToggle.addEventListener('click', toggleDark);
+  darkToggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleDark();
+    }
+  });
+}
 
 /*-------------------------------- Variables --------------------------------*/
 
@@ -134,20 +150,15 @@ function evaluateRow(guess, tilesInRow) {
     }
   }
 
-  // animate reveal: add a 'reveal' class with staggered delays and apply
-  // the final result class when each tile's animation ends.
   for (let i = 0; i < 5; i++) {
     const tile = tilesInRow[i];
     tile.classList.remove("correct", "present", "absent");
 
-    // ensure no leftover inline delay
     tile.style.animationDelay = `${i * 100}ms`;
     tile.classList.add("reveal");
 
-    // add one-time animationend handler to apply the result class
     ((t, idx) => {
       const handler = (e) => {
-        // only act on our flip animation
         if (e.animationName !== 'tile-flip') return;
         t.classList.remove('reveal');
         t.classList.add(result[idx]);
@@ -168,7 +179,6 @@ function updateKeyboard(guess, result) {
     const btn = keyMap[letter];
     if (!btn) continue;
 
-    // priority: correct (3) > present (2) > absent (1) > none (0)
     const currentPriority = btn.classList.contains('correct') ? 3 : btn.classList.contains('present') ? 2 : btn.classList.contains('absent') ? 1 : 0;
     const newPriority = result[i] === 'correct' ? 3 : result[i] === 'present' ? 2 : 1;
     if (newPriority > currentPriority) {
