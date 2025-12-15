@@ -16,10 +16,23 @@ letters.forEach((btn) => {
 
 const darkToggle = document.getElementById('dark-toggle');
 if (darkToggle) {
+  const saved = (() => {
+    try { return localStorage.getItem('darkMode'); } catch (e) { return null; }
+  })();
+  if (saved === 'true') {
+    document.body.classList.add('dark');
+    darkToggle.setAttribute('aria-pressed', 'true');
+    darkToggle.textContent = 'Light mode';
+  } else {
+    darkToggle.setAttribute('aria-pressed', 'false');
+    darkToggle.textContent = 'Dark mode';
+  }
+
   const toggleDark = () => {
     const isDark = document.body.classList.toggle('dark');
     darkToggle.setAttribute('aria-pressed', String(isDark));
     darkToggle.textContent = isDark ? 'Light mode' : 'Dark mode';
+    try { localStorage.setItem('darkMode', isDark ? 'true' : 'false'); } catch (e) {}
   };
 
   darkToggle.addEventListener('click', toggleDark);
@@ -29,6 +42,14 @@ if (darkToggle) {
       toggleDark();
     }
   });
+}
+
+function applySavedTheme() {
+  try {
+    const saved = localStorage.getItem('darkMode');
+    if (saved === 'true') document.body.classList.add('dark');
+    else document.body.classList.remove('dark');
+  } catch (e) {}
 }
 
 /*-------------------------------- Variables --------------------------------*/
@@ -101,6 +122,8 @@ function removeLetter() {
 }
 
 function submitRow() {
+  applySavedTheme();
+
   if (currentCol < 5) return;
   const tilesInRow = Array.from(rows[currentRow].children).slice(0, 5);
   const guess = tilesInRow.map((t) => t.textContent.trim().toLowerCase()).join("");
@@ -155,18 +178,38 @@ function evaluateRow(guess, tilesInRow) {
     tile.classList.remove("correct", "present", "absent");
 
     tile.style.animationDelay = `${i * 100}ms`;
+
+    tile.classList.add(result[i]);
+
     tile.classList.add("reveal");
 
-    ((t, idx) => {
-      const handler = (e) => {
-        if (e.animationName !== 'tile-flip') return;
-        t.classList.remove('reveal');
-        t.classList.add(result[idx]);
-        t.style.animationDelay = '';
-        t.removeEventListener('animationend', handler);
-      };
-      t.addEventListener('animationend', handler);
-    })(tile, i);
+      ((t, idx) => {
+        let finished = false;
+        const finish = (source = 'animationend') => {
+          if (finished) return;
+          finished = true;
+          t.classList.remove('reveal');
+          t.style.animationDelay = '';
+
+          try {
+            const cs = window.getComputedStyle(t);
+            const resultBg = cs.getPropertyValue('--result-bg').trim() || cs.backgroundColor;
+            const resultColor = cs.getPropertyValue('--result-color').trim() || cs.color;
+            const resultBorder = cs.getPropertyValue('--result-border').trim() || cs.borderColor;
+            t.style.backgroundColor = resultBg;
+            t.style.color = resultColor;
+            t.style.borderColor = resultBorder;
+            console.debug('tile-finish', idx, 'source=', source, 'classes=', t.className, 'applied inline bg=', resultBg, 'color=', resultColor, 'border=', resultBorder);
+          } catch (e) {
+          }
+        };
+
+        t.addEventListener('animationend', () => finish('animationend'), { once: true });
+
+        const delayMs = i * 100;
+        const durationMs = 420;
+        setTimeout(() => finish('fallback'), delayMs + durationMs + 80);
+      })(tile, i);
   }
 
   return result;

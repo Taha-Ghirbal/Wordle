@@ -12,7 +12,6 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* make nav stretch full viewport width */
     width: 100%;
     margin: 0;
     padding: 15px 30px;
@@ -22,14 +21,13 @@ nav {
 }
 
 #name {
-    /* keep #name in normal flow; nav uses align-items:center for vertical centering */
     margin: 0;
 }
 #name p { margin: 0; }
 
 body.dark {
-    background-color: #2b2b2b;
-    color: #eaeaea;
+    background-color: #121212;
+    color: #dddddd;
 }
 
 body.dark nav {
@@ -41,14 +39,14 @@ body.dark #game-title {
 }
 
 body.dark .tile {
-    background-color: #3a3a3a;
-    color: #eaeaea;
-    border-color: #e6e6e6;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border-color: #ffffff;
 }
 
 body.dark .letter {
-    background-color: #444444;
-    color: #eaeaea;
+    background-color: #2a2a2a;
+    color: #ffffff;
 }
 
 body.dark #keyboard .letter.correct {
@@ -112,8 +110,14 @@ body.dark #keyboard .letter.absent {
     align-items: center;
     font-size: 24px;
     text-transform: uppercase;
-    background-color: #ffffff;
-    color: #000000;
+    --tile-bg: #ffffff;
+    --tile-color: #000000;
+    --result-bg: var(--tile-bg);
+    --result-color: var(--tile-color);
+    --tile-border: #000000;
+    --result-border: #000000;
+    background-color: var(--tile-bg);
+    color: var(--tile-color);
     border-radius: 2px;
     margin: 2px 0px;
     transform-style: preserve-3d;
@@ -121,19 +125,28 @@ body.dark #keyboard .letter.absent {
 }
 
 .tile.correct {
-    background-color: #6aaa64;
-    color: #ffffff;
-    border-color: #6aaa64;
+    --tile-bg: #6aaa64;
+    --tile-color: #ffffff;
+    --tile-border: #6aaa64;
+    --result-bg: #6aaa64;
+    --result-color: #ffffff;
+    --result-border: #6aaa64;
 }
 .tile.present {
-    background-color: #c9b458;
-    color: #ffffff;
-    border-color: #c9b458;
+    --tile-bg: #c9b458;
+    --tile-color: #ffffff;
+    --tile-border: #c9b458;
+    --result-bg: #c9b458;
+    --result-color: #ffffff;
+    --result-border: #c9b458;
 }
 .tile.absent {
-    background-color: #787c7e;
-    color: #ffffff;
-    border-color: #787c7e;
+    --tile-bg: #787c7e;
+    --tile-color: #ffffff;
+    --tile-border: #787c7e;
+    --result-bg: #787c7e;
+    --result-color: #ffffff;
+    --result-border: #787c7e;
 }
 
 .tile.invalid {
@@ -245,9 +258,25 @@ body.dark #keyboard .letter.absent {
 }
 
 @keyframes tile-flip {
-    0% { transform: rotateX(0deg); }
-    50% { transform: rotateX(90deg); }
-    100% { transform: rotateX(0deg); }
+    0% {
+        transform: rotateX(0deg);
+        background-color: var(--tile-bg);
+        color: var(--tile-color);
+        border-color: var(--tile-border, #000);
+    }
+    50% {
+        transform: rotateX(90deg);
+        /* switch to result color at mid-flip */
+        background-color: var(--result-bg);
+        color: var(--result-color);
+        border-color: var(--result-border);
+    }
+    100% {
+        transform: rotateX(0deg);
+        background-color: var(--result-bg);
+        color: var(--result-color);
+        border-color: var(--result-border);
+    }
 }
 
 
