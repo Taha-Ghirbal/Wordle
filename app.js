@@ -33,6 +33,7 @@ if (darkToggle) {
     darkToggle.setAttribute('aria-pressed', String(isDark));
     darkToggle.textContent = isDark ? 'Light mode' : 'Dark mode';
     try { localStorage.setItem('darkMode', isDark ? 'true' : 'false'); } catch (e) {}
+    try { darkToggle.blur(); } catch (e) {}
   };
 
   darkToggle.addEventListener('click', toggleDark);
@@ -43,6 +44,18 @@ if (darkToggle) {
     }
   });
 }
+
+try {
+  const bodyObserver = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.attributeName === 'class') {
+        console.debug('BODY class changed ->', document.body.className, 'localStorage.darkMode=', (() => { try { return localStorage.getItem('darkMode'); } catch (e) { return null; } })());
+      }
+    }
+  });
+  bodyObserver.observe(document.body, { attributes: true });
+} catch (e) {}
+
 
 function applySavedTheme() {
   try {
@@ -88,6 +101,7 @@ document.addEventListener("keydown", (e) => {
   const key = e.key;
 
   if (key === "Enter") {
+    console.debug('physical Enter pressed, activeElement=', document.activeElement && document.activeElement.id ? document.activeElement.id : document.activeElement);
     e.preventDefault();
     submitRow();
     return;
@@ -101,6 +115,7 @@ document.addEventListener("keydown", (e) => {
 
   if (/^[a-zA-Z]$/.test(key)) {
     addLetter(key.toUpperCase());
+    console.debug('physical key', key, 'activeElement=', document.activeElement && document.activeElement.id ? document.activeElement.id : document.activeElement);
   }
 });
 
@@ -199,7 +214,6 @@ function evaluateRow(guess, tilesInRow) {
             t.style.backgroundColor = resultBg;
             t.style.color = resultColor;
             t.style.borderColor = resultBorder;
-            console.debug('tile-finish', idx, 'source=', source, 'classes=', t.className, 'applied inline bg=', resultBg, 'color=', resultColor, 'border=', resultBorder);
           } catch (e) {
           }
         };

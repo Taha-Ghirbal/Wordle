@@ -200,7 +200,7 @@ body.dark #keyboard .letter.absent {
     gap: 8px;
     margin-left: 25px;
 }
-/*------------------------------- Transitions -------------------------------*/
+/*------------------------------- Overlays -------------------------------*/
 
 #win-overlay {
     position: fixed;
@@ -266,7 +266,6 @@ body.dark #keyboard .letter.absent {
     }
     50% {
         transform: rotateX(90deg);
-        /* switch to result color at mid-flip */
         background-color: var(--result-bg);
         color: var(--result-color);
         border-color: var(--result-border);
@@ -279,7 +278,39 @@ body.dark #keyboard .letter.absent {
     }
 }
 
-
-
 /*------------------------------ Media Queries ------------------------------*/
 
+@media (max-width: 600px) {
+    #keyboard {
+        max-width: 100%;
+        padding: 0 10px;
+        display: block;
+    }
+
+    .row {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 6px 0;
+    }
+
+    .letter {
+        flex: 0 0 40px;
+        min-width: 40px;
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    .letter.wide {
+        flex: 0 0 72px;
+        min-width: 72px;
+    }
+
+    .tile {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}
