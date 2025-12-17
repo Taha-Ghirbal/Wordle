@@ -49,7 +49,6 @@ try {
   const bodyObserver = new MutationObserver((mutations) => {
     for (const m of mutations) {
       if (m.attributeName === 'class') {
-        console.debug('BODY class changed ->', document.body.className, 'localStorage.darkMode=', (() => { try { return localStorage.getItem('darkMode'); } catch (e) { return null; } })());
       }
     }
   });
@@ -101,7 +100,6 @@ document.addEventListener("keydown", (e) => {
   const key = e.key;
 
   if (key === "Enter") {
-    console.debug('physical Enter pressed, activeElement=', document.activeElement && document.activeElement.id ? document.activeElement.id : document.activeElement);
     e.preventDefault();
     submitRow();
     return;
@@ -115,7 +113,6 @@ document.addEventListener("keydown", (e) => {
 
   if (/^[a-zA-Z]$/.test(key)) {
     addLetter(key.toUpperCase());
-    console.debug('physical key', key, 'activeElement=', document.activeElement && document.activeElement.id ? document.activeElement.id : document.activeElement);
   }
 });
 
@@ -298,3 +295,39 @@ function showLosePopup() {
   };
   document.addEventListener("keydown", escHandler);
 }
+
+function resetGame() {
+  const winOverlay = document.getElementById('win-overlay');
+  const loseOverlay = document.getElementById('lose-overlay');
+  if (winOverlay) winOverlay.style.display = 'none';
+  if (loseOverlay) loseOverlay.style.display = 'none';
+
+  wordle = fiveLetterWords[Math.floor(Math.random() * fiveLetterWords.length)];
+  console.log('New Wordle solution (for testing):', wordle);
+
+  currentRow = 0;
+  currentCol = 0;
+  gameOver = false;
+
+  tiles.forEach((t) => {
+    t.textContent = '';
+    t.classList.remove('correct', 'present', 'absent', 'reveal', 'invalid');
+    t.style.backgroundColor = '';
+    t.style.color = '';
+    t.style.borderColor = '';
+  });
+
+  letters.forEach((b) => {
+    b.classList.remove('correct', 'present', 'absent');
+    b.style.backgroundColor = '';
+    b.style.color = '';
+  });
+
+  const sol = document.getElementById('solution-word');
+  if (sol) sol.textContent = '';
+}
+
+const winPlayBtn = document.getElementById('win-play');
+if (winPlayBtn) winPlayBtn.addEventListener('click', () => resetGame());
+const losePlayBtn = document.getElementById('lose-play');
+if (losePlayBtn) losePlayBtn.addEventListener('click', () => resetGame());
